@@ -15,6 +15,8 @@ import { LoginDto, RegistrationDto } from './auth.dto';
 import { compare } from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { AuthGuard } from 'src/guards/authGuard';
+import { JwtGuard } from './jwt.guard';
+import { JwtStrategy } from './jwt.strategy';
 
 @Controller('auth')
 export class AuthController {
@@ -73,11 +75,12 @@ export class AuthController {
         };
     }
 
-    @UseGuards(AuthGuard)
     @Post('logout')
+    @UseGuards(new JwtGuard(JwtStrategy))
     @HttpCode(HttpStatus.NO_CONTENT)
     async logout(@Request() req) {
-        await this.authService.updateToken(req.user._id, null);
+        console.log(req);
+        // await this.authService.updateToken(req.user._id, null);
         return {};
     }
 }

@@ -19,7 +19,7 @@ export class AuthService {
         return this.userModel.findOne({ email });
     }
 
-    async findById(_id: Types.ObjectId) {
+    async findById(_id: Types.ObjectId): Promise<User> {
         return this.userModel.findOne({ _id });
     }
 
